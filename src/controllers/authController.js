@@ -28,7 +28,8 @@ exports.register = async (req, res) => {
       data: { token, user: { id: result.insertId, email } },
     });
   } catch (err) {
-    console.error('register error:', err);
+    console.error('register error:', err.message, err.code || '', err.sqlMessage || '');
+    console.error(err.stack);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
@@ -58,7 +59,8 @@ exports.login = async (req, res) => {
       data: { token, user: { id: user.id, email: user.email } },
     });
   } catch (err) {
-    console.error('login error:', err);
+    console.error('login error:', err.message, err.code || '', err.sqlMessage || '');
+    console.error(err.stack);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
@@ -88,7 +90,8 @@ exports.requestPasswordReset = async (req, res) => {
       data: { reset_token: token }, // REMOVE in production, send via email instead
     });
   } catch (err) {
-    console.error('password reset error:', err);
+    console.error('password reset error:', err.message, err.code || '', err.sqlMessage || '');
+    console.error(err.stack);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
