@@ -143,10 +143,10 @@ exports.getToday = async (req, res) => {
             [req.user.id]
     );
 
-    const consumed     = logs.reduce((sum, r) => sum + r.total_calories, 0);
-    const totalProtein = logs.reduce((sum, r) => sum + (r.protein_g * r.servings), 0);
-    const totalCarbs   = logs.reduce((sum, r) => sum + (r.carbs_g   * r.servings), 0);
-    const totalFat     = logs.reduce((sum, r) => sum + (r.fat_g     * r.servings), 0);
+    const consumed     = logs.reduce((sum, r) => sum + Number(r.total_calories || 0), 0);
+    const totalProtein = logs.reduce((sum, r) => sum + (Number(r.protein_g || 0) * Number(r.servings || 0)), 0);
+    const totalCarbs   = logs.reduce((sum, r) => sum + (Number(r.carbs_g   || 0) * Number(r.servings || 0)), 0);
+    const totalFat     = logs.reduce((sum, r) => sum + (Number(r.fat_g     || 0) * Number(r.servings || 0)), 0);
 
     res.json({
         success: true,
